@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HeinSight 분석기</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>HeinSight 이미지 분석</h1>
+        
+        <!-- 파일 업로드 섹션 -->
+        <div class="upload-container">
+            <div class="upload-buttons">
+                <input type="file" 
+                id="fileInput" 
+                accept="image/*" 
+                style="opacity: 0; position: absolute; z-index: -1;" 
+                tabindex="-1"
+                aria-hidden="true">
+                <button id="uploadBtn">이미지 선택</button>
+                <button id="startAnalysisBtn" disabled>분석 시작</button>
+            </div>
+            
+            <!-- 이미지 미리보기 섹션 -->
+            <div id="previewContainer" class="preview-container hidden">
+                <h3>선택된 이미지</h3>
+                <img id="imagePreview" alt="이미지 미리보기">
+                <p id="fileName"></p>
+                <p id="fileInfo"></p>
+            </div>
+            
+            <!-- 매개변수 입력 폼 -->
+            <div class="parameters-form">
+                <h3>분석 매개변수 설정</h3>
+                <div class="parameter-group">
+                    <label for="nmsIou">NMS IOU 임계값 :</label>
+                    <input type="number" id="nmsIou" value="0.1" step="0.1" min="0" max="1">
+                    <span class="tooltip">물체 검출 시 중복 제거를 위한 IOU 임계값 (0~1)</span>
+                </div>
+                
+                <div class="parameter-group">
+                    <label for="confidence">신뢰도 임계값 :</label>
+                    <input type="number" id="confidence" value="0.2" step="0.1" min="0" max="1">
+                    <span class="tooltip">물체 검출을 위한 최소 신뢰도 점수 (0~1)</span>
+                </div>
+                
+                <div class="parameter-group">
+                    <label for="batchSize">배치 크기 :</label>
+                    <input type="number" id="batchSize" value="32" step="1" min="1" max="128">
+                    <span class="tooltip">한 번에 처리할 이미지의 수 (메모리 사용량에 영향)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 진행 상태 표시 섹션 -->
+        <div id="progressContainer" class="hidden">
+            <h2>처리 진행 상태</h2>
+            <div class="progress-bar">
+                <div id="progress"></div>
+            </div>
+            <div id="progressLogs"></div>
+        </div>
+        
+        <!-- 결과 표시 섹션 -->
+        <div id="results" class="hidden">
+            <h2>분석 결과</h2>
+            
+            <!-- Volume 데이터 섹션 -->
+            <div class="results-section">
+                <h3>Volume 분석 결과</h3>
+                <div id="volumeData" class="volume-data-container">
+                    <!-- Volume 데이터가 여기에 동적으로 추가됨 -->
+                </div>
+            </div> 
+
+            <!-- 이미지 결과 섹션 -->
+            <div class="results-section">
+                <h3>이미지 분석 결과</h3>
+                <div class="image-results">
+                    <div class="result-image-container">
+                        <h4>검출 결과</h4>
+                        <img id="outputImage" alt="검출 결과">
+                    </div>
+                    <div class="result-image-container">
+                        <h4>탁도 분석</h4>
+                        <img id="turbidityImage" alt="탁도 분석 결과">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
